@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Form Using jQuery - Demo Preview</title>
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="google-signin-client_id" content="951836066188-27du1lah7q4i5fskvdmvb5v66llmsahd.apps.googleusercontent.com">
+	<!-- Include CSS File Here -->
+	<link rel="stylesheet" href="style.css"/>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+	<!-- Include CSS File Here -->
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script type="text/javascript" src="login.js"></script>
+	<script type="text/javascript">
+		
+		function onSuccess(googleUser) {
+			var profile = googleUser.getBasicProfile();
+			gapi.client.load('plus', 'v1', function () {
+				var request = gapi.client.plus.people.get({
+					'userId': 'me'
+				});
+        //Display the user details
+        request.execute(function (resp) {
+        	console.log(resp);
+        	var profileHTML = '<div class="profile"><div class="head">Welcome '+resp.name.givenName+'! <a href="javascript:void(0);" onclick="signOut();">Sign out</a></div>';
+        	profileHTML += '<img src="'+resp.image.url+'"/><div class="proDetails"><p>'+resp.displayName+'</p><p>'+resp.emails[0].value+'</p><p>'+resp.gender+'</p><p>'+resp.id+'</p><p><a href="'+resp.url+'">View Google+ Profile</a></p></div></div>';
+            //$('.details').html(profileHTML);
+            $('#useremail').val(resp.emails[0].value);
+            $('#userFirstName').val(resp.name.givenName);
+            $('#userLastName').val(resp.name.familyName);
+            $('#userImage').attr('src', resp.image.url);
+            $('#gSignIn').slideUp('slow');
+            $('.container').remove();
+            $('#detailsDiv').css("visibility", "visible");
+        });
+    });
+		}
+		function onFailure(error) {
+			console.log(error);
+		}
+		function renderButton() {
+			gapi.signin2.render('gSignIn', {
+				'scope': 'profile email',
+				'width': 300,
+				'height': 40,
+				'longtitle': true,
+				'theme': 'dark',
+				'font-weight': 'bold',
+				'onsuccess': onSuccess,
+				'onfailure': onFailure
+			});
+		}
+		function signOut() {
+			var auth2 = gapi.auth2.getAuthInstance();
+			auth2.signOut().then(function () {
+				$('.userContent').html('');
+				$('#gSignIn').slideDown('slow');
+			});
+		}
+	</script>
+</head>
+<body>
+	<div data-role="header">
+		<div data-role="header" align="right">
+			<div align="right" style="padding: 10px;background: #3d566d;color: red;font: aerial;font-size: 25px">AssureServe</div>
+		</div>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#" data-icon="home">Home</a></li>
+				<li><a href="#" data-icon="arrow-r">About Us</a></li>
+				<li><a href="#" data-icon="search">Search</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<div class="main">
+			<form class="form" method="post" action="#">
+				<h2>Login</h2>
+				<label class="lable">Email :</label>
+				<input type="text" name="demail" id="email" class="input2">
+				<label class="lable">Password :</label>
+				<input type="password" name="password" id="password" class="input2">
+				<div type="button" name="login" id="login" value="Login">Login</div>
+				<div><br/></div>
+				<div id="gSignIn"></div>
+			</form>
+		</div>
+	</div>
+
+	<div style="margin: 50px 0 0 50px;visibility: hidden" id="detailsDiv">
+		<div class="ui-field-contain" style="width: 500px;border: 15px solid white;box-shadow: 0 0 10px;border-radius: 2px;" id="detailsDiv2">
+			<div><img id="userImage" height="200" width="200" /></div>
+			<label>Email :</label>
+			<input type="text" name="demail" id="useremail" width="100">
+			<div><br/>&nbsp;</div>
+			<label>FirstName :</label>
+			<input type="text" name="demail" id="userFirstName">
+			<div><br/>&nbsp;</div>
+			<label>LastName :</label>
+			<input type="text" name="demail" id="userLastName">
+			<div><br/>&nbsp;</div>
+			<label>Phone :</label>
+			<input type="text" name="demail" id="userPhone2">
+			<div><br/>&nbsp;</div>
+			<label>Company :</label>
+			<input type="text" name="demail" id="userPhone2">
+			<div><br/>&nbsp;</div>
+			<label>Zip Code :</label>
+			<input type="text" name="demail" id="userPhone2">
+		</div>
+	</div>
+
+<div style="margin: 50px 0 0 50px;visibility: hidden" id="detailsDiv3">
+<div class="ui-field-contain" style="width: 500px;border: 15px solid white;box-shadow: 0 0 10px;border-radius: 2px;" id="detailsDiv2">asdfasdfasf
+<div><img id="userImage" height="200" width="200" /></div>
+			<label>Email :</label>
+			<input type="text" name="demail" id="useremail" width="100">
+			<!--<div><br/>&nbsp;</div>
+			<label>FirstName :</label>
+			<input type="text" name="demail" id="userFirstName">
+			<div><br/>&nbsp;</div>
+			<label>LastName :</label>
+			<input type="text" name="demail" id="userLastName">
+			<div><br/>&nbsp;</div>
+			<label>Phone :</label>
+			<input type="text" name="demail" id="userPhone">
+			<div><br/>&nbsp;</div>
+			<label>Company :</label>
+			<input type="text" name="demail" id="userPhone">
+			<div><br/>&nbsp;</div>
+			<label>Zip Code :</label>
+			<input type="text" name="demail" id="userPhone"> -->
+</div></div>
+</body>
+<script src="https://apis.google.com/js/client:platform.js?onload=renderButton" async defer></script>
+</html>
